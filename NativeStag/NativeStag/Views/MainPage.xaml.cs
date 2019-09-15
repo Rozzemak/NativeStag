@@ -12,7 +12,7 @@ namespace NativeStag.Views
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
-    public partial class MainPage : MasterDetailPage
+    public partial class MainPage
     {
         Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
         public MainPage()
@@ -24,7 +24,7 @@ namespace NativeStag.Views
             MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
         }
 
-        public async Task NavigateFromMenu(int id)
+        public async Task NavigateFromMenuAsync(int id)
         {
             if (!MenuPages.ContainsKey(id))
             {

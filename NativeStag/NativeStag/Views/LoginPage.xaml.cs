@@ -1,27 +1,27 @@
-﻿using NativeStag.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using NativeStag.Models;
+using NativeStag.Models.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace NativeStag.Views
 {
-    // Learn more about making custom code visible in the Xamarin.Forms previewer
-    // by visiting https://aka.ms/xamarinforms-previewer
-    [DesignTimeVisible(false)]
-    public partial class MenuPage : ContentPage
+    public partial class LoginPage : ContentPage
     {
         MainPage RootPage { get => Application.Current.MainPage as MainPage; }
         List<HomeMenuItem> menuItems;
-        public MenuPage()
+        public LoginPage()
         {
             InitializeComponent();
 
             menuItems = new List<HomeMenuItem>
             {
                 new HomeMenuItem {Id = MenuItemType.Browse, Title="Browse" },
-                new HomeMenuItem {Id = MenuItemType.About, Title="About" }
+                new HomeMenuItem {Id = MenuItemType.Logout, Title="Logout" }
             };
 
             ListViewMenu.ItemsSource = menuItems;

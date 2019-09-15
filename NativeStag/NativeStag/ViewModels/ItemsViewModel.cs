@@ -19,17 +19,17 @@ namespace NativeStag.ViewModels
         {
             Title = "Browse";
             Items = new ObservableCollection<Item>();
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommandAsync());
 
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
             {
                 var newItem = item as Item;
                 Items.Add(newItem);
-                await DataStore.AddItemAsync(newItem);
+                await DataStore.AddItemAsync(newItem).ConfigureAwait(true);
             });
         }
 
-        async Task ExecuteLoadItemsCommand()
+        async Task ExecuteLoadItemsCommandAsync()
         {
             if (IsBusy)
                 return;
@@ -39,7 +39,7 @@ namespace NativeStag.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await DataStore.GetItemsAsync(true).ConfigureAwait(false);
                 foreach (var item in items)
                 {
                     Items.Add(item);
