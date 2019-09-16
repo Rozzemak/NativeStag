@@ -1,7 +1,6 @@
 ﻿using System;
-
+using Android.Graphics;
 using NativeStag.Models;
-using Xamarin.Forms;
 
 namespace NativeStag.ViewModels
 {

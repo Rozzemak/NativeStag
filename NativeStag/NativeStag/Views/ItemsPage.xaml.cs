@@ -4,12 +4,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Android.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using NativeStag.Models;
 using NativeStag.Views;
 using NativeStag.ViewModels;
+using Color = Android.Graphics.Color;
 
 namespace NativeStag.Views
 {
@@ -52,8 +54,15 @@ namespace NativeStag.Views
 
             if (viewModel.Items.Count == 0)
                 viewModel.LoadItemsCommand.Execute(null);
+
+            // Little hack to enforce item re-render. IObservable will not catch this.
+            ItemsListView.BeginRefresh();
+            ItemsListView.EndRefresh();
         }
 
-        
+        private void SwipeGestureRecognizer_OnSwiped(object sender, SwipedEventArgs e)
+        {
+            MessagingCenter.Send(this, "DeleteTodo", viewModel?.Items.FirstOrDefault());
+        }
     }
 }

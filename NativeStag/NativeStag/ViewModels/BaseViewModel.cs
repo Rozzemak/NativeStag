@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 using NativeStag.Models;
 using NativeStag.Services;
+using Color = Android.Graphics.Color;
 
 namespace NativeStag.ViewModels
 {
@@ -52,6 +53,13 @@ namespace NativeStag.ViewModels
         {
             get => todoType;
             set => SetProperty(ref todoType, value);
+        }
+
+        private Xamarin.Forms.Color color;
+        public Xamarin.Forms.Color Color
+        {
+            get => color;
+            set => SetProperty(ref color, value);
         }
 
         protected bool SetProperty<T>(ref T backingStore, T value,

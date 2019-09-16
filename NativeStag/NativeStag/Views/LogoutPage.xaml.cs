@@ -17,15 +17,12 @@ namespace NativeStag.Views
         {
             InitializeComponent();
             Application.Current.MainPage = this;
-            LogoutAsync();
+            Logout();
         }
 
-        private async void LogoutAsync()
+        private void Logout()
         {
-            Device.BeginInvokeOnMainThread(() =>
-            {
-               Application.Current.MainPage = new LoginPage();
-            });
+            Application.Current.MainPage = new LoginPage();
         }
     }
 }

@@ -29,16 +29,14 @@ namespace NativeStag.Views
                 new HomeMenuItem {Id = MenuItemType.Logout, Title = "Logout", Location = MenuLocation.Bottom},
             };
 
-            ListViewTopMenu.ItemsSource = _menuItems.Where(item => item.Location == MenuLocation.Top);
-            ListViewBottomMenu.ItemsSource = _menuItems.Where(item => item.Location == MenuLocation.Bottom);
+            ListViewTopMenu.ItemsSource = _menuItems;//.Where(item => item.Location == MenuLocation.Top);
+            //ListViewBottomMenu.ItemsSource = _menuItems.Where(item => item.Location == MenuLocation.Bottom);
             
             //todo: check for user login => then make selected logout
             ListViewTopMenu.SelectedItem = _menuItems.FirstOrDefault(item => item.Id == MenuItemType.Assignments);
             ListViewTopMenu.ItemTapped += ListItemTapped;
-            ListViewBottomMenu.ItemTapped += ListItemTapped;
-            var height = FlexViewBottomMenu.Children.FirstOrDefault()?.Height;
-            if (height != null)
-                FlexViewBottomMenu.HeightRequest = 110 * _menuItems.Count(item => item.Location == MenuLocation.Bottom);
+            //ListViewBottomMenu.ItemTapped += ListItemTapped;
+            
 
         }
 

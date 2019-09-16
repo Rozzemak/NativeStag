@@ -6,7 +6,7 @@
              xmlns:sys="clr-namespace:System;assembly=netstandard"
              mc:Ignorable="d"
              x:Class="NativeStag.Views.NewItemPage"
-             Title="New Item">
+             Title="New Todo">
     
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />

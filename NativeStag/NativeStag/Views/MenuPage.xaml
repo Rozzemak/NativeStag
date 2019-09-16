@@ -8,42 +8,27 @@
              Title="Menu">
 
     <FlexLayout Direction="Column"  JustifyContent="Start" AlignItems="Start">
-        <ListView x:Name="ListViewTopMenu" VerticalOptions="FillAndExpand" SelectionMode="None"
-                  HasUnevenRows="True"  FlexLayout.AlignSelf="Start" FlexLayout.Grow="2">
-            <d:ListView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Item 1</x:String>
-                    <x:String>Item 2</x:String>
-                </x:Array>
-            </d:ListView.ItemsSource>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid Padding="10">
-                            <Label Text="{Binding Title}" d:Text="{Binding .}" FontSize="20"/>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <FlexLayout x:Name="FlexViewBottomMenu" Direction="Column" AlignItems="Start" FlexLayout.Grow="1" JustifyContent="Start">
-            <ListView x:Name="ListViewBottomMenu" d:FlexLayout.Grow="1" VerticalOptions="FillAndExpand" HasUnevenRows="True" SelectionMode="None">
-                <d:ListView.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Item 1</x:String>
-                        <x:String>Item 2</x:String>
-                    </x:Array>
-                </d:ListView.ItemsSource>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid Padding="10">
-                                <Label Text="{Binding Title}" d:Text="{Binding .}" FontSize="20"/>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </FlexLayout>
+        <ScrollView>
+            <FlexLayout FlexLayout.AlignSelf="Start" Direction="Column">
+                <ListView x:Name="ListViewTopMenu" SelectionMode="None"
+                          HasUnevenRows="True"  FlexLayout.AlignSelf="Start" >
+                    <d:ListView.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Item 1</x:String>
+                            <x:String>Item 2</x:String>
+                        </x:Array>
+                    </d:ListView.ItemsSource>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="10">
+                                    <Label Text="{Binding Title}" d:Text="{Binding .}" FontSize="20"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </FlexLayout>
+        </ScrollView>
     </FlexLayout>
 </ContentPage>

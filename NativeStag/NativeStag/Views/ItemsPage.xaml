@@ -22,22 +22,27 @@
                 IsPullToRefreshEnabled="true"
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                 CachingStrategy="RecycleElement"
-                ItemSelected="OnItemSelected">
+                ItemSelected="OnItemSelected"
+                RefreshAllowed="True"
+                Footer="Click add to add todo!"
+        >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Padding="10">
-                            <Label Text="{Binding Text}" 
-                                d:Text="{Binding .}"
-                                LineBreakMode="NoWrap" 
-                                Style="{DynamicResource ListItemTextStyle}" 
-                                FontSize="16" />
-                            <Label Text="{Binding Description}" 
-                                d:Text="Item descripton"
-                                LineBreakMode="NoWrap"
-                                Style="{DynamicResource ListItemDetailTextStyle}"
-                                FontSize="13" />
-                        </StackLayout>
+                        <FlexLayout Direction="Row" JustifyContent="SpaceAround" BackgroundColor="{Binding Color}" Margin="7">
+                            <Frame BackgroundColor="Transparent" BorderColor="Transparent" FlexLayout.Grow="1"/>
+                            <StackLayout Orientation="Horizontal" FlexLayout.Grow="6">
+                                <Label Text="{Binding Text}" 
+                                       LineBreakMode="NoWrap" 
+                                       Style="{DynamicResource ListItemTextStyle}" 
+                                       FontSize="20"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"
+                                       FlexLayout.Basis="180"
+                                />
+                            </StackLayout>
+                            <DatePicker Date="{Binding Deadline}" Format="(hhh:mm)dd.MMM.yy" IsEnabled="False" FlexLayout.AlignSelf="Start" FlexLayout.Grow="5"/>
+                        </FlexLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

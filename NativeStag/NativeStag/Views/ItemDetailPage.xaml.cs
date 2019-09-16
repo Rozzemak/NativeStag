@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,6 +20,7 @@ namespace NativeStag.Views
         {
             InitializeComponent();
             BindingContext = this.viewModel = viewModel;
+            TypePicker.ItemsSource = new List<TodoType>() { TodoType.Basic, TodoType.Important, TodoType.Indifferent, TodoType.Hidden, };
         }
 
         public ItemDetailPage()
