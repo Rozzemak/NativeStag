@@ -34,6 +34,16 @@ namespace NativeStag.Services
             return items;
         }
 
+        public Task<bool> SavePersistItemsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> LoadPersistItemsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Item> GetItemAsync(string id)
         {
             if (id != null && IsConnected)

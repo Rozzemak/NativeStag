@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -21,7 +22,7 @@ namespace NativeStag.Views
 
             MasterBehavior = MasterBehavior.Popover;
 
-            MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
+            MenuPages.Add((int)MenuItemType.Assignments, (NavigationPage)Detail);
         }
 
         public async Task NavigateFromMenuAsync(int id)
@@ -30,26 +31,27 @@ namespace NativeStag.Views
             {
                 switch (id)
                 {
-                    case (int)MenuItemType.Browse:
+                    case (int)MenuItemType.Assignments:
                         MenuPages.Add(id, new NavigationPage(new ItemsPage()));
                         break;
                     case (int)MenuItemType.About:
                         MenuPages.Add(id, new NavigationPage(new AboutPage()));
                         break;
+                    case (int)MenuItemType.Logout:
+                        MenuPages.Add(id, new NavigationPage(new LogoutPage()));
+                        break;
                 }
             }
 
-            var newPage = MenuPages[id];
+            var newPage = MenuPages.FirstOrDefault(pair => pair.Key == id).Value;
 
             if (newPage != null && Detail != newPage)
             {
                 Detail = newPage;
-
-                if (Device.RuntimePlatform == Device.Android)
-                    await Task.Delay(100);
-
+                
                 IsPresented = false;
             }
         }
+
     }
 }

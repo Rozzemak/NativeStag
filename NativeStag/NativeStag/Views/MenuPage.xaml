@@ -6,10 +6,10 @@
              mc:Ignorable="d"
              x:Class="NativeStag.Views.MenuPage"
              Title="Menu">
-             
-    <StackLayout VerticalOptions="FillAndExpand">
-        <ListView x:Name="ListViewMenu"
-                    HasUnevenRows="True">
+
+    <FlexLayout Direction="Column"  JustifyContent="Start" AlignItems="Start">
+        <ListView x:Name="ListViewTopMenu" VerticalOptions="FillAndExpand" SelectionMode="None"
+                  HasUnevenRows="True"  FlexLayout.AlignSelf="Start" FlexLayout.Grow="2">
             <d:ListView.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Item 1</x:String>
@@ -26,6 +26,24 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackLayout>
-
+        <FlexLayout x:Name="FlexViewBottomMenu" Direction="Column" AlignItems="Start" FlexLayout.Grow="1" JustifyContent="Start">
+            <ListView x:Name="ListViewBottomMenu" d:FlexLayout.Grow="1" VerticalOptions="FillAndExpand" HasUnevenRows="True" SelectionMode="None">
+                <d:ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Item 1</x:String>
+                        <x:String>Item 2</x:String>
+                    </x:Array>
+                </d:ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Label Text="{Binding Title}" d:Text="{Binding .}" FontSize="20"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </FlexLayout>
+    </FlexLayout>
 </ContentPage>

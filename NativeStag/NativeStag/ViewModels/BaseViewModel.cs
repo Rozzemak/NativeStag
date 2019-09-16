@@ -12,20 +12,46 @@ namespace NativeStag.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
+        private IDataStore<Item> dataStore;
+        public IDataStore<Item> DataStore
+        {
+            get => dataStore ?? (dataStore = new MockDataStore());
+            set => SetProperty(ref dataStore, value);
+        }
 
         bool isBusy = false;
         public bool IsBusy
         {
-            get { return isBusy; }
-            set { SetProperty(ref isBusy, value); }
+            get => isBusy;
+            set => SetProperty(ref isBusy, value);
         }
 
         string title = string.Empty;
         public string Title
         {
-            get { return title; }
-            set { SetProperty(ref title, value); }
+            get => title;
+            set => SetProperty(ref title, value);
+        }
+
+        private DateTime? deadline;
+        public DateTime? Deadline
+        {
+            get => deadline;
+            set => SetProperty(ref deadline, value);
+        }
+
+        private DateTime? completed;
+        public DateTime? Completed
+        {
+            get => completed;
+            set => SetProperty(ref completed, value);
+        }
+
+        private TodoType todoType;
+        public TodoType TodoType
+        {
+            get => todoType;
+            set => SetProperty(ref todoType, value);
         }
 
         protected bool SetProperty<T>(ref T backingStore, T value,

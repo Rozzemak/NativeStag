@@ -18,22 +18,36 @@ namespace NativeStag.Views
         public ItemDetailPage(ItemDetailViewModel viewModel)
         {
             InitializeComponent();
-
             BindingContext = this.viewModel = viewModel;
         }
 
         public ItemDetailPage()
         {
-            InitializeComponent();
-
-            var item = new Item
+            // Default constructor only for debug purposes
+            Device.BeginInvokeOnMainThread(() =>
             {
-                Text = "Item 1",
-                Description = "This is an item description."
-            };
+                InitializeComponent();
 
-            viewModel = new ItemDetailViewModel(item);
-            BindingContext = viewModel;
+                var item = new Item
+                {
+                    Text = "Item",
+                    Description = "This is an item description."
+                };
+                viewModel = new ItemDetailViewModel(item);
+                BindingContext = viewModel;
+            });
+        }
+
+        void Save_Clicked(object sender, EventArgs e)
+        {
+            MessagingCenter.Send(this, "UpdateTodo", viewModel?.Item);
+            Navigation.PopAsync();
+        }
+
+        void Delete_Clicked(object sender, EventArgs e)
+        {
+            MessagingCenter.Send(this, "DeleteTodo", viewModel?.Item);
+            Navigation.PopAsync();
         }
     }
 }

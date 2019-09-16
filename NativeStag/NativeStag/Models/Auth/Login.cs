@@ -14,5 +14,8 @@ namespace NativeStag.Models.Auth
         public LoginItemType Id { get; set; }
 
         public string Placeholder { get; set; }
+
+        public bool IsPassword { get; set; }
+        
     }
 }

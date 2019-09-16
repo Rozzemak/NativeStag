@@ -1,6 +1,7 @@
 ﻿using System;
 
 using NativeStag.Models;
+using Xamarin.Forms;
 
 namespace NativeStag.ViewModels
 {
@@ -10,6 +11,9 @@ namespace NativeStag.ViewModels
         public ItemDetailViewModel(Item item = null)
         {
             Title = item?.Text;
+            Completed = item?.Completed;
+            Deadline = item?.Deadline;
+            TodoType = item?.TodoType ?? TodoType.Basic;
             Item = item;
         }
     }

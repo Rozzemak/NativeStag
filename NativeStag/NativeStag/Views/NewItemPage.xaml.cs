@@ -21,22 +21,31 @@ namespace NativeStag.Views
 
             Item = new Item
             {
-                Text = "Item name",
-                Description = "This is an item description."
+                Id = Guid.NewGuid().ToString(),
+                Text = "",
+                Description = "",
+                MinimumDate = DateTime.Now,
+                Deadline = DateTime.Now.AddDays(1),
             };
-
+            TypePicker.ItemsSource = new List<TodoType>(){ TodoType.Basic, TodoType.Important, TodoType.Indifferent, TodoType.Hidden, };
+            TypePicker.SelectedIndexChanged += TypePickerOnSelectedIndexChanged;
             BindingContext = this;
         }
 
-        async void Save_Clicked(object sender, EventArgs e)
+        private void TypePickerOnSelectedIndexChanged(object sender, EventArgs e)
         {
-            MessagingCenter.Send(this, "AddItem", Item);
-            await Navigation.PopModalAsync();
+            Item.TodoType = (TodoType) TypePicker.SelectedItem;
         }
 
-        async void Cancel_Clicked(object sender, EventArgs e)
+        void Save_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            MessagingCenter.Send(this, "AddTodo", Item);
+            Navigation.PopModalAsync();
+        }
+
+        void Cancel_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopModalAsync().ConfigureAwait(false);
         }
     }
 }

@@ -27,21 +27,23 @@ namespace NativeStag.Views
             BindingContext = viewModel = new ItemsViewModel();
         }
 
-        async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
+        private async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var item = args.SelectedItem as Item;
-            if (item == null)
+            if (!(args.SelectedItem is Item item))
                 return;
 
-            await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
+            await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item))).ConfigureAwait(false);
 
             // Manually deselect item.
-            ItemsListView.SelectedItem = null;
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                ItemsListView.SelectedItem = null;
+            });
         }
 
         async void AddItem_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
+            await Navigation.PushModalAsync(new NavigationPage(new NewItemPage())).ConfigureAwait(false);
         }
 
         protected override void OnAppearing()
@@ -51,5 +53,7 @@ namespace NativeStag.Views
             if (viewModel.Items.Count == 0)
                 viewModel.LoadItemsCommand.Execute(null);
         }
+
+        
     }
 }

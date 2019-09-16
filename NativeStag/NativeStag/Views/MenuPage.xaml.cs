@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,29 +13,42 @@ namespace NativeStag.Views
     [DesignTimeVisible(false)]
     public partial class MenuPage : ContentPage
     {
-        MainPage RootPage { get => Application.Current.MainPage as MainPage; }
-        List<HomeMenuItem> menuItems;
+        private MainPage RootPage => Application.Current.MainPage as MainPage;
+
+        private readonly List<HomeMenuItem> _menuItems;
+
         public MenuPage()
         {
             InitializeComponent();
 
-            menuItems = new List<HomeMenuItem>
+            _menuItems = new List<HomeMenuItem>
             {
-                new HomeMenuItem {Id = MenuItemType.Browse, Title="Browse" },
-                new HomeMenuItem {Id = MenuItemType.About, Title="About" }
+                new HomeMenuItem {Id = MenuItemType.Assignments, Title = "Todo", Location = MenuLocation.Top},
+                //new HomeMenuItem {Id = MenuItemType.About, Title = "About", Location = MenuLocation.Top},
+                new HomeMenuItem {Id = MenuItemType.About, Title = "About", Location = MenuLocation.Bottom},
+                new HomeMenuItem {Id = MenuItemType.Logout, Title = "Logout", Location = MenuLocation.Bottom},
             };
 
-            ListViewMenu.ItemsSource = menuItems;
+            ListViewTopMenu.ItemsSource = _menuItems.Where(item => item.Location == MenuLocation.Top);
+            ListViewBottomMenu.ItemsSource = _menuItems.Where(item => item.Location == MenuLocation.Bottom);
+            
+            //todo: check for user login => then make selected logout
+            ListViewTopMenu.SelectedItem = _menuItems.FirstOrDefault(item => item.Id == MenuItemType.Assignments);
+            ListViewTopMenu.ItemTapped += ListItemTapped;
+            ListViewBottomMenu.ItemTapped += ListItemTapped;
+            var height = FlexViewBottomMenu.Children.FirstOrDefault()?.Height;
+            if (height != null)
+                FlexViewBottomMenu.HeightRequest = 110 * _menuItems.Count(item => item.Location == MenuLocation.Bottom);
 
-            ListViewMenu.SelectedItem = menuItems[0];
-            ListViewMenu.ItemSelected += async (sender, e) =>
-            {
-                if (e.SelectedItem == null)
-                    return;
+        }
 
-                var id = (int)((HomeMenuItem)e.SelectedItem).Id;
-                await RootPage.NavigateFromMenuAsync(id);
-            };
+        private async void ListItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            if (e?.Item == null)
+                return;
+
+            var id = (int) ((HomeMenuItem) e?.Item)?.Id;
+            await RootPage.NavigateFromMenuAsync(id).ConfigureAwait(false);
         }
     }
 }

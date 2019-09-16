@@ -7,25 +7,9 @@
              x:Class="NativeStag.Views.LoginPage"
              Title="Menu">
     <ContentPage.Content>
-        <FlexLayout>
-            <ListView x:Name="ListViewMenu"
-                      HasUnevenRows="True">
-                <d:ListView.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Item 1</x:String>
-                        <x:String>Item 2</x:String>
-                    </x:Array>
-                </d:ListView.ItemsSource>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid Padding="10">
-                                <Label Text="{Binding Title}" d:Text="{Binding .}" FontSize="20"/>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+        <FlexLayout AlignItems="Stretch" Direction="Column">
+            <Entry x:Name="UserNameEntry" Placeholder="{Binding Placeholder}"/>
+            <Entry x:Name="PasswordEntry" IsPassword="{Binding IsPassword}" Placeholder="{Binding Placeholder}"/>
         </FlexLayout>
     </ContentPage.Content>
 </ContentPage>

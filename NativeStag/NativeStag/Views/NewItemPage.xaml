@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
              mc:Ignorable="d"
              x:Class="NativeStag.Views.NewItemPage"
              Title="New Item">
@@ -14,10 +15,15 @@
     
     <ContentPage.Content>
         <StackLayout Spacing="20" Padding="15">
-            <Label Text="Text" FontSize="Medium" />
-            <Entry Text="{Binding Item.Text}" d:Text="Item name" FontSize="Small" />
-            <Label Text="Description" FontSize="Medium" />
-            <Editor Text="{Binding Item.Description}" d:Text="Item description" FontSize="Small" Margin="0" />
+            <Label Text="TodoName" FontSize="Medium" />
+            <Entry Placeholder="name" Text="{Binding Item.Text}" FontSize="Small" />
+            <Label Text="TodoDescription" FontSize="Medium" />
+            <Editor Placeholder="description" Text="{Binding Item.Description}" FontSize="Small" Margin="0" />
+            <Label Text="Deadline" FontSize="Medium" />
+            <!-- Datetime min val is broken in MVVM, has to be set before render -->
+            <DatePicker x:Name="Deadline" MinimumDate="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='{0:MMMM dd, yyyy}'}" Date="{Binding Item.Deadline}"/>
+            <Label Text="TodoType" FontSize="Medium" />
+            <Picker x:Name="TypePicker" Title="{Binding Item.TodoType}" FontSize="Small" Margin="0" />
         </StackLayout>
     </ContentPage.Content>
     

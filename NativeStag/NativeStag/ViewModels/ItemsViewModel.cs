@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -17,15 +18,29 @@ namespace NativeStag.ViewModels
 
         public ItemsViewModel()
         {
-            Title = "Browse";
+            Title = "Todos";
             Items = new ObservableCollection<Item>();
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommandAsync());
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommandAsync().ConfigureAwait(false));
 
-            MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
+            MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddTodo", async (obj, item) =>
             {
-                var newItem = item as Item;
+                var newItem = item;
                 Items.Add(newItem);
-                await DataStore.AddItemAsync(newItem).ConfigureAwait(true);
+                await DataStore.AddItemAsync(newItem).ConfigureAwait(false);
+            });
+
+            MessagingCenter.Subscribe<ItemDetailPage, Item>(this, "UpdateTodo", async (obj, item) =>
+            {
+                var updatedItem = item;
+                Items.Remove(Items.FirstOrDefault(item1 => item1.Id.Equals(item.Id)));
+                Items.Add(updatedItem);
+                await DataStore.UpdateItemAsync(updatedItem).ConfigureAwait(false);
+            });
+
+            MessagingCenter.Subscribe<ItemDetailPage, Item>(this, "DeleteTodo", async (obj, item) =>
+            {
+                Items.Remove(Items.FirstOrDefault(item1 => item1.Id.Equals(item.Id)));
+                await DataStore.DeleteItemAsync(item.Id).ConfigureAwait(false);
             });
         }
 

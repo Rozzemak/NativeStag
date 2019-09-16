@@ -10,31 +10,20 @@ using Xamarin.Forms.Xaml;
 
 namespace NativeStag.Views
 {
-    public partial class LoginPage : ContentPage
+    public partial class LoginPage
     {
-        MainPage RootPage { get => Application.Current.MainPage as MainPage; }
-        List<HomeMenuItem> menuItems;
+        MainPage RootPage => Application.Current.MainPage as MainPage;
+        private readonly List<Login> _loginFormItems = new List<Login>();
         public LoginPage()
         {
             InitializeComponent();
+            Application.Current.MainPage = this;
+            
+            UserNameEntry.BindingContext = new Login
+                {Id = LoginItemType.UserName, Placeholder = "Username/Email", IsPassword = false};
+            PasswordEntry.BindingContext = new Login
+                {Id = LoginItemType.Password, Placeholder = "Password", IsPassword = true};
 
-            menuItems = new List<HomeMenuItem>
-            {
-                new HomeMenuItem {Id = MenuItemType.Browse, Title="Browse" },
-                new HomeMenuItem {Id = MenuItemType.Logout, Title="Logout" }
-            };
-
-            ListViewMenu.ItemsSource = menuItems;
-
-            ListViewMenu.SelectedItem = menuItems[0];
-            ListViewMenu.ItemSelected += async (sender, e) =>
-            {
-                if (e.SelectedItem == null)
-                    return;
-
-                var id = (int)((HomeMenuItem)e.SelectedItem).Id;
-                await RootPage.NavigateFromMenuAsync(id);
-            };
         }
     }
 }
